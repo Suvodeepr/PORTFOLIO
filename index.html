@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suvodeep Roy | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0f172a', // Slate 900
+                        secondary: '#1e293b', // Slate 800
+                        accent: '#38bdf8', // Sky 400
+                        accentHover: '#0ea5e9', // Sky 500
+                        glass: 'rgba(30, 41, 59, 0.7)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-5px);
+            border-color: rgba(56, 189, 248, 0.3);
+            box-shadow: 0 10px 40px -10px rgba(56, 189, 248, 0.2);
+        }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+
+        /* Particle Canvas */
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Toast Notification */
+        #toast {
+            visibility: hidden;
+            min-width: 250px;
+            background-color: #38bdf8;
+            color: #0f172a;
+            text-align: center;
+            border-radius: 50px;
+            padding: 16px;
+            position: fixed;
+            z-index: 100;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s, bottom 0.3s;
+        }
+
+        #toast.show {
+            visibility: visible;
+            opacity: 1;
+            bottom: 50px;
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <!-- Toast Notification Element -->
+    <div id="toast"><i class="fas fa-check-circle mr-2"></i>Email copied to clipboard!</div>
+
+    <!-- Canvas Background -->
+    <canvas id="particles"></canvas>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-panel border-b border-white/5 top-0 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold tracking-tighter text-white">SR<span class="text-accent">.</span></a>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="#about" class="text-slate-300 hover:text-accent transition-colors text-sm font-medium">About</a>
+                <a href="#skills" class="text-slate-300 hover:text-accent transition-colors text-sm font-medium">Skills</a>
+                <a href="#projects" class="text-slate-300 hover:text-accent transition-colors text-sm font-medium">Projects</a>
+                <a href="#education" class="text-slate-300 hover:text-accent transition-colors text-sm font-medium">Education</a>
+                <a href="#contact" class="px-4 py-2 rounded-full border border-accent text-accent hover:bg-accent hover:text-white transition-all text-sm font-medium">Contact Me</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-white focus:outline-none" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-white/5 p-4 space-y-4">
+            <a href="#about" class="block text-slate-300 hover:text-accent">About</a>
+            <a href="#skills" class="block text-slate-300 hover:text-accent">Skills</a>
+            <a href="#projects" class="block text-slate-300 hover:text-accent">Projects</a>
+            <a href="#education" class="block text-slate-300 hover:text-accent">Education</a>
+            <a href="#contact" class="block text-accent font-medium">Contact Me</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center pt-20 relative overflow-hidden">
+        <!-- Background Glow -->
+        <div class="absolute top-1/4 -left-20 w-96 h-96 bg-accent/20 rounded-full blur-[100px] animate-pulse-slow"></div>
+        <div class="absolute bottom-1/4 -right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-[100px] animate-pulse-slow" style="animation-delay: 1s;"></div>
+
+        <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6 reveal active">
+                <div class="inline-block px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-semibold tracking-wider border border-accent/20">
+                    OPEN TO WORK
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold leading-tight">
+                    Hello, I'm <br>
+                    <span class="gradient-text">Suvodeep Roy</span>
+                </h1>
+                <p class="text-xl text-slate-400 max-w-lg leading-relaxed">
+                    M.C.A Graduate & Full Stack Developer specialized in MERN Stack, Java, and Data Analysis. Building efficient solutions for complex problems.
+                </p>
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a href="#projects" class="px-8 py-3 bg-accent text-white rounded-full font-medium hover:bg-accentHover transition-all shadow-lg shadow-accent/25 hover:shadow-accent/40 transform hover:-translate-y-1">
+                        View My Work
+                    </a>
+                    <a href="#contact" class="px-8 py-3 glass-panel text-white rounded-full font-medium hover:bg-white/10 transition-all border border-white/10">
+                        Contact Me
+                    </a>
+                </div>
+                
+                <!-- Social Links -->
+                <div class="flex gap-6 pt-4 text-slate-400">
+                    <a href="https://www.linkedin.com/in/suvodeep-roy-507434217" target="_blank" class="hover:text-accent transition-colors text-2xl"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:SUVODEEPR94@GMAIL.COM" class="hover:text-accent transition-colors text-2xl"><i class="fas fa-envelope"></i></a>
+                    <a href="#" class="hover:text-accent transition-colors text-2xl"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+
+            <!-- Profile Image Holder -->
+            <div class="relative reveal delay-200 group cursor-pointer" onclick="document.getElementById('hero-upload').click()">
+                <input type="file" id="hero-upload" class="hidden" accept="image/*" onchange="previewImage(event, 'hero-img')">
+                <div class="absolute inset-0 bg-gradient-to-tr from-accent to-purple-500 rounded-full blur-2xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
+                <div class="relative w-72 h-72 md:w-96 md:h-96 mx-auto rounded-full p-2 border-2 border-dashed border-white/20 group-hover:border-accent transition-colors">
+                    <img id="hero-img" src="https://ui-avatars.com/api/?name=Suvodeep+Roy&background=0f172a&color=38bdf8&size=512" alt="Suvodeep Roy" class="w-full h-full object-cover rounded-full border-4 border-slate-900 shadow-2xl animate-float">
+                    <div class="absolute bottom-4 right-10 bg-slate-800 text-white p-2 rounded-full shadow-lg border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i class="fas fa-camera text-sm"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Down Indicator -->
+        <a href="#about" class="absolute bottom-10 left-1/2 transform -translate-x-1/2 text-slate-500 hover:text-accent transition-colors animate-bounce">
+            <i class="fas fa-chevron-down text-xl"></i>
+        </a>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 relative">
+        <div class="container mx-auto px-6">
+            <div class="glass-panel rounded-3xl p-8 md:p-12 border border-white/5">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="order-2 md:order-1 relative cursor-pointer group" onclick="document.getElementById('about-upload').click()">
+                        <input type="file" id="about-upload" class="hidden" accept="image/*" onchange="previewImage(event, 'about-img')">
+                        <div class="aspect-video rounded-xl overflow-hidden relative">
+                             <img id="about-img" src="https://images.unsplash.com/photo-1542831371-29b0f74f9713?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Coding" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                             <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <span class="text-white font-medium"><i class="fas fa-camera mr-2"></i>Change Photo</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-1 md:order-2 space-y-6">
+                        <h2 class="text-3xl font-bold"><span class="text-accent">01.</span> About Me</h2>
+                        <p class="text-slate-300 leading-relaxed text-lg">
+                            I am a dedicated and motivated MCA graduate from <span class="text-white font-medium">Netaji Subhash Engineering College</span>. 
+                            My journey in technology is driven by a passion for solving challenging problems through clean code and efficient algorithms.
+                        </p>
+                        <p class="text-slate-300 leading-relaxed">
+                            I specialize in <span class="text-accent">Full Stack Development</span> and Data Analysis. Whether it's optimizing database queries to reduce errors by 50% or building real-time security systems, I focus on delivering impact.
+                        </p>
+                        
+                        <div class="grid grid-cols-2 gap-4 pt-4">
+                            <div class="glass-card p-4 rounded-lg">
+                                <i class="fas fa-code text-accent mb-2 text-xl"></i>
+                                <h4 class="font-bold text-white">Development</h4>
+                                <p class="text-xs text-slate-400">Java, Python, MERN</p>
+                            </div>
+                            <div class="glass-card p-4 rounded-lg">
+                                <i class="fas fa-database text-accent mb-2 text-xl"></i>
+                                <h4 class="font-bold text-white">Database</h4>
+                                <p class="text-xs text-slate-400">SQL, MongoDB</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats/Achievements Banner -->
+    <section class="py-12 border-y border-white/5 bg-slate-900/50">
+        <div class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center reveal">
+            <div class="space-y-2">
+                <div class="text-4xl font-bold text-white">40%</div>
+                <div class="text-sm text-slate-400 uppercase tracking-wide">User Retention Increase</div>
+            </div>
+            <div class="space-y-2">
+                <div class="text-4xl font-bold text-accent">95%</div>
+                <div class="text-sm text-slate-400 uppercase tracking-wide">Code Efficiency</div>
+            </div>
+            <div class="space-y-2">
+                <div class="text-4xl font-bold text-white">2 Weeks</div>
+                <div class="text-sm text-slate-400 uppercase tracking-wide">Ahead of Schedule</div>
+            </div>
+            <div class="space-y-2">
+                <div class="text-4xl font-bold text-accent">50%</div>
+                <div class="text-sm text-slate-400 uppercase tracking-wide">Error Reduction</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-24">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4"><span class="text-accent">02.</span> Technical Arsenal</h2>
+                <p class="text-slate-400">Languages and tools I use to build seamless experiences.</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 reveal">
+                <!-- Skill Tags -->
+                <div class="glass-card p-4 rounded-xl text-center hover:bg-white/5 cursor-default">
+                    <i class="fab fa-java text-4xl text-orange-500 mb-3"></i>
+                    <h3 class="font-medium">Java</h3>
+                </div>
+                <div class="glass-card p-4 rounded-xl text-center hover:bg-white/5 cursor-default">
+                    <i class="fab fa-python text-4xl text-yellow-400 mb-3"></i>
+                    <h3 class="font-medium">Python</h3>
+                </div>
+                <div class="glass-card p-4 rounded-xl text-center hover:bg-white/5 cursor-default">
+                    <i class="fas fa-leaf text-4xl text-green-500 mb-3"></i>
+                    <h3 class="font-medium">Spring Boot</h3>
+                </div>
+                <div class="glass-card p-4 rounded-xl text-center hover:bg-white/5 cursor-default">
+                    <i class="fab fa-react text-4xl text-blue-400 mb-3"></i>
+                    <h3 class="font-medium">React (MERN)</h3>
+                </div>
+                <div class="glass-card p-4 rounded-xl text-center hover:bg-white/5 cursor-default">
+                    <i class="fas fa-database text-4xl text-green-600 mb-3"></i>
+                    <h3 class="font-medium">MongoDB</h3>
+                </div>
+                <div class="glass-card p-4 rounded-xl text-center hover:bg-white/5 cursor-default">
+                    <i class="fas fa-table text-4xl text-blue-500 mb-3"></i>
+                    <h3 class="font-medium">SQL</h3>
+                </div>
+                <div class="glass-card p-4 rounded-xl text-center hover:bg-white/5 cursor-default">
+                    <i class="fab fa-html5 text-4xl text-orange-600 mb-3"></i>
+                    <h3 class="font-medium">HTML5</h3>
+                </div>
+                <div class="glass-card p-4 rounded-xl text-center hover:bg-white/5 cursor-default">
+                    <i class="fab fa-css3-alt text-4xl text-blue-600 mb-3"></i>
+                    <h3 class="font-medium">CSS3</h3>
+                </div>
+                <div class="glass-card p-4 rounded-xl text-center hover:bg-white/5 cursor-default">
+                    <i class="fab fa-js text-4xl text-yellow-300 mb-3"></i>
+                    <h3 class="font-medium">JavaScript</h3>
+                </div>
+                <div class="glass-card p-4 rounded-xl text-center hover:bg-white/5 cursor-default">
+                    <i class="fab fa-linux text-4xl text-white mb-3"></i>
+                    <h3 class="font-medium">Linux</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience/Projects Section -->
+    <section id="projects" class="py-24 relative bg-slate-900/30">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 reveal"><span class="text-accent">03.</span> Featured Projects</h2>
+            
+            <div class="space-y-12">
+                
+                <!-- Project 1 -->
+                <div class="glass-panel p-8 rounded-2xl border border-white/5 reveal group">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-1/3">
+                            <div class="h-48 bg-gradient-to-br from-purple-900 to-slate-900 rounded-xl flex items-center justify-center border border-white/10 group-hover:border-accent/50 transition-colors">
+                                <i class="fas fa-shield-alt text-6xl text-white/20 group-hover:text-accent transition-colors"></i>
+                            </div>
+                        </div>
+                        <div class="md:w-2/3 space-y-4">
+                            <div class="flex justify-between items-start">
+                                <h3 class="text-2xl font-bold text-white">Behavioural Authentication System</h3>
+                                <span class="text-xs font-mono text-accent bg-accent/10 px-2 py-1 rounded">2025-2026</span>
+                            </div>
+                            <p class="text-slate-300">
+                                Developed a continuous behavioural authentication system to detect and prevent malicious user sessions in real-time. Analyzed user behavior patterns such as keystroke dynamics, mouse movement, and session activity to identify anomalies.
+                            </p>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span class="px-3 py-1 bg-slate-800 text-xs rounded-full text-slate-300">Python</span>
+                                <span class="px-3 py-1 bg-slate-800 text-xs rounded-full text-slate-300">Machine Learning</span>
+                                <span class="px-3 py-1 bg-slate-800 text-xs rounded-full text-slate-300">Security</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="glass-panel p-8 rounded-2xl border border-white/5 reveal group">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-1/3">
+                            <div class="h-48 bg-gradient-to-br from-blue-900 to-slate-900 rounded-xl flex items-center justify-center border border-white/10 group-hover:border-accent/50 transition-colors">
+                                <i class="fas fa-shopping-cart text-6xl text-white/20 group-hover:text-accent transition-colors"></i>
+                            </div>
+                        </div>
+                        <div class="md:w-2/3 space-y-4">
+                            <div class="flex justify-between items-start">
+                                <h3 class="text-2xl font-bold text-white">E-commerce Platform</h3>
+                                <span class="text-xs font-mono text-accent bg-accent/10 px-2 py-1 rounded">2023</span>
+                            </div>
+                            <p class="text-slate-300">
+                                Created a complete online shopping website using the Java Spring framework. Features include user login, product browsing, cart management, and order placement. Achieved 95% code efficiency and increased user retention by 40% through enhanced UX design.
+                            </p>
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span class="px-3 py-1 bg-slate-800 text-xs rounded-full text-slate-300">Java Spring</span>
+                                <span class="px-3 py-1 bg-slate-800 text-xs rounded-full text-slate-300">MySQL</span>
+                                <span class="px-3 py-1 bg-slate-800 text-xs rounded-full text-slate-300">Web Dev</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-24">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center reveal"><span class="text-accent">04.</span> Education Journey</h2>
+            
+            <div class="max-w-3xl mx-auto space-y-8 relative">
+                <!-- Vertical Line -->
+                <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-accent to-purple-600 opacity-20"></div>
+
+                <!-- Edu Item 1 -->
+                <div class="relative reveal">
+                    <div class="md:flex items-center justify-between group">
+                        <div class="hidden md:block w-5/12 text-right pr-8">
+                            <h3 class="text-xl font-bold text-white">Master of Computer Application (MCA)</h3>
+                            <p class="text-accent">Netaji Subhash Engineering College</p>
+                        </div>
+                        <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-slate-900 border-2 border-accent rounded-full z-10 group-hover:scale-125 transition-transform"></div>
+                        <div class="md:w-5/12 pl-12 md:pl-8 pb-8 md:pb-0">
+                            <div class="md:hidden">
+                                <h3 class="text-xl font-bold text-white">Master of Computer Application (MCA)</h3>
+                                <p class="text-accent">Netaji Subhash Engineering College</p>
+                            </div>
+                            <span class="text-sm font-mono text-slate-400">2024 - 2026</span>
+                            <p class="text-slate-300 mt-2">SGPA: 8.40</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edu Item 2 -->
+                <div class="relative reveal">
+                    <div class="md:flex items-center justify-between group">
+                        <div class="hidden md:block w-5/12 text-right pr-8">
+                            <span class="text-sm font-mono text-slate-400">2020 - 2024</span>
+                            <p class="text-slate-300 mt-2">CGPA: 6.69</p>
+                        </div>
+                        <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-slate-900 border-2 border-purple-500 rounded-full z-10 group-hover:scale-125 transition-transform"></div>
+                        <div class="md:w-5/12 pl-12 md:pl-8 pb-8 md:pb-0">
+                            <h3 class="text-xl font-bold text-white">B.Sc in Computer Science</h3>
+                            <p class="text-purple-400">Calcutta University</p>
+                            <div class="md:hidden">
+                                <span class="text-sm font-mono text-slate-400">2020 - 2024</span>
+                                <p class="text-slate-300 mt-2">CGPA: 6.69</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Edu Item 3 -->
+                 <div class="relative reveal">
+                    <div class="md:flex items-center justify-between group">
+                        <div class="hidden md:block w-5/12 text-right pr-8">
+                            <h3 class="text-xl font-bold text-white">Higher Secondary (10+2)</h3>
+                            <p class="text-slate-300">Rajpur Vidyanidhi High School</p>
+                        </div>
+                        <div class="absolute left-4 md:left-1/2 transform -translate-x-1/2 w-4 h-4 bg-slate-900 border-2 border-slate-500 rounded-full z-10 group-hover:scale-125 transition-transform"></div>
+                        <div class="md:w-5/12 pl-12 md:pl-8">
+                            <div class="md:hidden">
+                                <h3 class="text-xl font-bold text-white">Higher Secondary (10+2)</h3>
+                                <p class="text-slate-300">Rajpur Vidyanidhi High School</p>
+                            </div>
+                            <span class="text-sm font-mono text-slate-400">2019 - 2021</span>
+                            <p class="text-slate-400 text-sm mt-1">Marks: 68.9%</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Contact -->
+    <footer id="contact" class="bg-black/20 pt-20 pb-10 border-t border-white/5">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-8">Let's Build Something Amazing</h2>
+            <p class="text-slate-400 mb-10 max-w-xl mx-auto">
+                I'm currently looking for new opportunities in Software Development. 
+                Whether you have a question or just want to say hi, my inbox is always open.
+            </p>
+            
+            <a href="#" onclick="handleContact(event)" class="inline-block px-8 py-4 bg-accent text-white rounded-lg font-bold hover:bg-accentHover transition-all mb-12 shadow-lg shadow-accent/20">
+                <i class="fas fa-paper-plane mr-2"></i> Say Hello
+            </a>
+
+            <div class="flex justify-center gap-8 mb-12">
+                <a href="https://www.linkedin.com/in/suvodeep-roy-507434217" class="w-12 h-12 rounded-full glass-panel flex items-center justify-center hover:bg-white/10 hover:text-accent transition-all">
+                    <i class="fab fa-linkedin-in text-xl"></i>
+                </a>
+                <a href="#" class="w-12 h-12 rounded-full glass-panel flex items-center justify-center hover:bg-white/10 hover:text-accent transition-all">
+                    <i class="fab fa-github text-xl"></i>
+                </a>
+                <a href="tel:+919874164427" class="w-12 h-12 rounded-full glass-panel flex items-center justify-center hover:bg-white/10 hover:text-accent transition-all">
+                    <i class="fas fa-phone text-xl"></i>
+                </a>
+            </div>
+
+            <div class="text-slate-500 text-sm">
+                <p>&copy; 2026 Suvodeep Roy. All rights reserved.</p>
+                <p class="mt-2 text-xs">Designed with <i class="fas fa-heart text-red-500"></i> & Code.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // --- 1. Image Preview Logic ---
+        function previewImage(event, imgId) {
+            const input = event.target;
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById(imgId);
+                    img.src = e.target.result;
+                    // Reset animation for effect
+                    img.classList.remove('animate-float');
+                    void img.offsetWidth; // trigger reflow
+                    img.classList.add('animate-float');
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // --- 2. Scroll Animation (Intersection Observer) ---
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // --- 3. Particle Background Animation ---
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+
+        let particlesArray;
+
+        // Set canvas size
+        function setCanvasSize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        setCanvasSize();
+
+        // Create Particle Class
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.speedX = (Math.random() * 0.5) - 0.25;
+                this.speedY = (Math.random() * 0.5) - 0.25;
+                this.color = Math.random() > 0.5 ? '#38bdf8' : '#818cf8'; // accent colors
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                // Wrap around screen
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = 0.4;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 15000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.addEventListener('resize', () => {
+            setCanvasSize();
+            initParticles();
+        });
+
+        initParticles();
+        animateParticles();
+
+        // --- 4. Contact Button Handler ---
+        function handleContact(e) {
+            e.preventDefault();
+            const email = "SUVODEEPR94@GMAIL.COM";
+            
+            // 1. Copy to Clipboard
+            const el = document.createElement('textarea');
+            el.value = email;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+
+            // 2. Show Toast
+            const toast = document.getElementById('toast');
+            toast.className = "show";
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+
+            // 3. Try Mailto (Optional fallback)
+            setTimeout(() => { window.location.href = "mailto:" + email; }, 1500);
+        }
+    </script>
+</body>
+</html>
