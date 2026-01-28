@@ -1,52 +1,50 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Suvodeep Roy | Portfolio</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Suvodeep Roy | Backend Developer</title>
 
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-  <!-- Icons -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
-
-  <!-- Tailwind Config -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            bg: "#020617",
-            card: "#020617cc",
-            accent: "#38bdf8",
-          }
-        }
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        bg: "#020617",
+        card: "#020617cc",
+        accent: "#38bdf8",
+        glow: "#0ea5e9"
       }
     }
-  </script>
+  }
+}
+</script>
 
-  <style>
-    body { background: radial-gradient(circle at top, #020617, #000); }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 0.8s ease;
-    }
-    .reveal.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  </style>
+<style>
+body {
+  background: radial-gradient(circle at top, #020617, #000);
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+.reveal.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
 </head>
 
 <body class="text-slate-200">
 
-<!-- NAVBAR -->
-<header class="fixed top-0 w-full bg-black/40 backdrop-blur z-50 border-b border-white/10">
+<!-- NAV -->
+<header class="fixed top-0 w-full bg-black/40 backdrop-blur border-b border-white/10 z-50">
   <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-    <span class="text-xl font-bold text-accent">&lt; Suvodeep /&gt;</span>
+    <span class="text-accent font-bold text-lg">&lt; Suvodeep /&gt;</span>
     <nav class="hidden md:flex gap-8 text-sm">
       <a href="#about" class="hover:text-accent">About</a>
       <a href="#projects" class="hover:text-accent">Projects</a>
@@ -54,182 +52,175 @@
       <a href="#education" class="hover:text-accent">Education</a>
       <a href="#contact" class="hover:text-accent">Contact</a>
     </nav>
-    <a href="resume.pdf" download
-       class="px-4 py-2 rounded-lg bg-accent text-black font-semibold">
-       Resume
+    <a href="resume.pdf" download class="px-4 py-2 bg-accent text-black rounded-lg font-semibold">
+      Resume
     </a>
   </div>
 </header>
 
 <!-- HERO -->
 <section class="min-h-screen flex items-center pt-32">
-  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-    <div class="reveal">
-      <span class="inline-block px-4 py-1 mb-4 text-xs rounded-full bg-accent/10 text-accent">
-        AVAILABLE FOR WORK
-      </span>
-      <h1 class="text-5xl md:text-6xl font-bold mb-6">
-        Hi, I'm <span class="text-accent">Suvodeep Roy</span>
-      </h1>
-      <p class="text-slate-400 mb-6">
-        MCA Student | Java & Backend Developer passionate about building scalable,
-        efficient software solutions.
-      </p>
-      <div class="flex gap-4">
-        <a href="#projects" class="px-6 py-3 bg-accent text-black rounded-lg font-semibold">
-          View My Work
-        </a>
-        <a href="#contact" class="px-6 py-3 border border-white/20 rounded-lg">
-          Contact Me
-        </a>
-      </div>
-    </div>
+<div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
 
-    <div class="reveal flex justify-center">
-      <img src="photo.jpg"
-           class="w-72 h-72 object-cover rounded-2xl border border-white/20 shadow-xl"/>
-    </div>
+<div class="reveal">
+  <span class="inline-block px-4 py-1 mb-4 text-xs bg-accent/10 text-accent rounded-full">
+    AVAILABLE FOR WORK
+  </span>
+
+  <h1 class="text-5xl md:text-6xl font-bold leading-tight mb-6">
+    Hi, I'm <span class="text-accent">Suvodeep Roy</span>
+  </h1>
+
+  <p class="text-slate-400 mb-6">
+    MCA Student | Java & Backend Developer <br>
+    Passionate about performance, scalability, and clean architecture.
+  </p>
+
+  <div class="flex gap-4">
+    <a href="#projects" class="px-6 py-3 bg-accent text-black rounded-lg font-semibold">
+      View Projects
+    </a>
+    <a href="#contact" class="px-6 py-3 border border-white/20 rounded-lg">
+      Contact Me
+    </a>
   </div>
+</div>
+
+<!-- CODE CARD -->
+<div class="reveal bg-card border border-white/10 rounded-xl p-6 shadow-xl">
+<pre class="text-sm text-slate-300">
+<span class="text-purple-400">public class</span> <span class="text-accent">DeveloperProfile</span> {
+  String education = <span class="text-green-400">"MCA"</span>;
+  String role = <span class="text-green-400">"Backend Engineer"</span>;
+
+  String[] stack = {
+    <span class="text-green-400">"Java"</span>,
+    <span class="text-green-400">"Spring"</span>,
+    <span class="text-green-400">"Python"</span>,
+    <span class="text-green-400">"SQL"</span>
+  };
+
+  void build() {
+    System.out.println(<span class="text-green-400">"Ready to ship"</span>);
+  }
+}
+</pre>
+</div>
+
+</div>
 </section>
 
 <!-- ABOUT -->
 <section id="about" class="py-32 reveal">
-  <div class="max-w-5xl mx-auto px-6 text-center">
-    <h2 class="text-3xl font-bold mb-6 text-accent">About Me</h2>
-    <p class="text-slate-400 leading-relaxed">
-      I am a dedicated MCA graduate with strong foundations in Java, Spring,
-      SQL, and backend engineering. I love solving complex problems and
-      continuously improving system performance.
-    </p>
-  </div>
+<div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+
+<img src="photo.jpg" class="rounded-2xl shadow-xl border border-white/20"/>
+
+<div>
+<h2 class="text-3xl font-bold mb-4 text-accent">About Me</h2>
+<p class="text-slate-400 leading-relaxed">
+Dedicated MCA graduate with strong backend fundamentals.
+Experienced in Java, Spring Boot, databases, and system optimization.
+</p>
+</div>
+
+</div>
 </section>
 
 <!-- SKILLS -->
 <section id="skills" class="py-32 bg-black/40 reveal">
-  <div class="max-w-6xl mx-auto px-6">
-    <h2 class="text-3xl font-bold text-center mb-12 text-accent">
-      Skills & Technologies
-    </h2>
+<div class="max-w-6xl mx-auto px-6">
+<h2 class="text-3xl font-bold text-center mb-12 text-accent">Skills</h2>
 
-    <div class="grid md:grid-cols-2 gap-8">
-      <div>
-        <p>Java Spring</p>
-        <div class="h-2 bg-white/10 rounded"><div class="h-2 w-[90%] bg-accent rounded"></div></div>
+<div class="grid md:grid-cols-2 gap-8">
+<div>
+<p>Java & Spring</p>
+<div class="h-2 bg-white/10 rounded"><div class="h-2 w-[90%] bg-accent rounded"></div></div>
 
-        <p class="mt-4">Python</p>
-        <div class="h-2 bg-white/10 rounded"><div class="h-2 w-[85%] bg-accent rounded"></div></div>
+<p class="mt-4">Python</p>
+<div class="h-2 bg-white/10 rounded"><div class="h-2 w-[85%] bg-accent rounded"></div></div>
+</div>
 
-        <p class="mt-4">SQL & MongoDB</p>
-        <div class="h-2 bg-white/10 rounded"><div class="h-2 w-[80%] bg-accent rounded"></div></div>
-      </div>
+<div class="flex flex-wrap gap-3">
+<span class="px-4 py-2 bg-white/5 rounded-lg">Java</span>
+<span class="px-4 py-2 bg-white/5 rounded-lg">Spring</span>
+<span class="px-4 py-2 bg-white/5 rounded-lg">Python</span>
+<span class="px-4 py-2 bg-white/5 rounded-lg">SQL</span>
+<span class="px-4 py-2 bg-white/5 rounded-lg">MongoDB</span>
+</div>
+</div>
 
-      <div class="flex flex-wrap gap-3">
-        <span class="px-4 py-2 bg-white/5 rounded-lg">Java</span>
-        <span class="px-4 py-2 bg-white/5 rounded-lg">Spring</span>
-        <span class="px-4 py-2 bg-white/5 rounded-lg">Python</span>
-        <span class="px-4 py-2 bg-white/5 rounded-lg">SQL</span>
-        <span class="px-4 py-2 bg-white/5 rounded-lg">MongoDB</span>
-        <span class="px-4 py-2 bg-white/5 rounded-lg">HTML</span>
-        <span class="px-4 py-2 bg-white/5 rounded-lg">CSS</span>
-      </div>
-    </div>
-  </div>
+</div>
 </section>
 
 <!-- PROJECTS -->
 <section id="projects" class="py-32 reveal">
-  <div class="max-w-7xl mx-auto px-6">
-    <h2 class="text-3xl font-bold text-center mb-12 text-accent">
-      Featured Projects
-    </h2>
+<div class="max-w-7xl mx-auto px-6">
+<h2 class="text-3xl font-bold text-center mb-12 text-accent">Projects</h2>
 
-    <div class="grid md:grid-cols-3 gap-8">
-      <div class="bg-white/5 rounded-xl overflow-hidden">
-        <img src="assets/project1.png" class="h-48 w-full object-cover"/>
-        <div class="p-6">
-          <h3 class="font-bold mb-2">Behavioural Authentication</h3>
-          <p class="text-sm text-slate-400">
-            Real-time anomaly detection using user behavior patterns.
-          </p>
-        </div>
-      </div>
+<div class="grid md:grid-cols-3 gap-8">
+<div class="bg-white/5 rounded-xl overflow-hidden">
+<img src="assets/project1.png" class="h-48 w-full object-cover"/>
+<div class="p-6">
+<h3 class="font-bold mb-2">Behavioural Authentication</h3>
+<p class="text-sm text-slate-400">Cybersecurity & ML based system</p>
+</div>
+</div>
 
-      <div class="bg-white/5 rounded-xl overflow-hidden">
-        <img src="assets/project2.png" class="h-48 w-full object-cover"/>
-        <div class="p-6">
-          <h3 class="font-bold mb-2">E-commerce Platform</h3>
-          <p class="text-sm text-slate-400">
-            Java Spring based shopping platform with secure login.
-          </p>
-        </div>
-      </div>
+<div class="bg-white/5 rounded-xl overflow-hidden">
+<img src="assets/project2.png" class="h-48 w-full object-cover"/>
+<div class="p-6">
+<h3 class="font-bold mb-2">E-commerce Platform</h3>
+<p class="text-sm text-slate-400">Spring Boot + MySQL</p>
+</div>
+</div>
 
-      <div class="bg-white/5 rounded-xl overflow-hidden">
-        <img src="assets/project3.png" class="h-48 w-full object-cover"/>
-        <div class="p-6">
-          <h3 class="font-bold mb-2">Library Management</h3>
-          <p class="text-sm text-slate-400">
-            Database-driven system to manage books and users.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<div class="bg-white/5 rounded-xl overflow-hidden">
+<img src="assets/project3.png" class="h-48 w-full object-cover"/>
+<div class="p-6">
+<h3 class="font-bold mb-2">Library Management</h3>
+<p class="text-sm text-slate-400">Database-driven system</p>
+</div>
+</div>
+</div>
 
-<!-- EDUCATION -->
-<section id="education" class="py-32 bg-black/40 reveal">
-  <div class="max-w-4xl mx-auto px-6 text-center">
-    <h2 class="text-3xl font-bold mb-8 text-accent">Education</h2>
-    <p class="text-slate-400">
-      MCA – Netaji Subhash Engineering College (2024-2026)<br/>
-      B.Sc Computer Science – Calcutta University
-    </p>
-  </div>
+</div>
 </section>
 
 <!-- CONTACT -->
 <section id="contact" class="py-32 reveal">
-  <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-12">
-    <div>
-      <h2 class="text-3xl font-bold mb-4 text-accent">Let's Connect</h2>
-      <p class="text-slate-400 mb-6">
-        Have an opportunity or just want to say hi?
-      </p>
-      <p>📧 suvodeepr94@gmail.com</p>
-      <p>📍 Kolkata, India</p>
-    </div>
+<div class="max-w-5xl mx-auto px-6 grid md:grid-cols-2 gap-12">
 
-    <!-- Formspree (works on GitHub Pages) -->
-    <form action="https://formspree.io/f/xeqybkpb" method="POST"
-          class="bg-white/5 p-6 rounded-xl">
-      <input name="name" placeholder="Your Name"
-             class="w-full mb-4 p-3 bg-black/40 rounded"/>
-      <input name="email" placeholder="Your Email"
-             class="w-full mb-4 p-3 bg-black/40 rounded"/>
-      <textarea name="message" placeholder="Message"
-                class="w-full mb-4 p-3 bg-black/40 rounded"></textarea>
-      <button class="w-full bg-accent text-black py-3 rounded-lg font-semibold">
-        Send Message
-      </button>
-    </form>
-  </div>
+<div>
+<h2 class="text-3xl font-bold mb-4 text-accent">Let's Connect</h2>
+<p class="text-slate-400 mb-4">suvodeepr94@gmail.com</p>
+<p>Kolkata, India</p>
+</div>
+
+<form action="https://formspree.io/f/YOUR_FORM_ID" method="POST"
+class="bg-white/5 p-6 rounded-xl">
+<input name="name" required placeholder="Your Name" class="w-full p-3 mb-4 bg-black/40 rounded"/>
+<input name="email" type="email" required placeholder="Your Email" class="w-full p-3 mb-4 bg-black/40 rounded"/>
+<textarea name="message" required placeholder="Message" class="w-full p-3 mb-4 bg-black/40 rounded"></textarea>
+<button class="w-full bg-accent text-black py-3 rounded-lg font-semibold">
+Send Message
+</button>
+</form>
+
+</div>
 </section>
 
-<!-- FOOTER -->
 <footer class="py-6 text-center text-slate-500 border-t border-white/10">
-  © 2026 Suvodeep Roy
+© 2026 Suvodeep Roy
 </footer>
 
-<!-- SCROLL ANIMATION SCRIPT -->
 <script>
-  const reveals = document.querySelectorAll(".reveal");
-  window.addEventListener("scroll", () => {
-    reveals.forEach(el => {
-      const top = el.getBoundingClientRect().top;
-      if (top < window.innerHeight - 100) el.classList.add("show");
-    });
-  });
+document.querySelectorAll(".reveal").forEach(el=>{
+  const observer = new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting) el.classList.add("show");
+  },{threshold:0.2});
+  observer.observe(el);
+});
 </script>
 
 </body>
